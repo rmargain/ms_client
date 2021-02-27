@@ -1,0 +1,145 @@
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    background-color: @darkblue;
+}
+.header {
+    display: flex;
+    position: "fixed";
+    z-index: 1;
+}
+
+.logo {
+    // float: left;
+    width: 250px;
+    height: auto;
+    margin: 16px 16px 16px 16px;
+    // background-image: url("../../../assets/default.png");
+    // background-size: contain;
+    // background-repeat: no-repeat;
+}
+.login-profile-logout {
+    color: @white;
+    font-weight: bolder;
+    
+    bottom: -2px;
+    height: 100%
+    
+}
+.login-profile-logout:hover {
+    color: @darkgrey;
+    text-decoration:underline;
+}
+
+.ant-row-rtf .logo {
+    float: right;
+    margin: 8px 0 8px 16px;
+}
+
+.site-layout-background {
+    background: #fff;
+}
+
+.ant-layout-header {
+    padding: 0 10px 0 10px;
+    background-color: @darkblue;
+
+    .ant-menu {
+        background-color: @darkblue;
+        
+    }
+}
+.ant-menu.ant-menu-dark .ant-menu-item-selected,
+.ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+    // background-color: @yellow;
+    border-bottom: 4px solid @yellow;
+}
+
+.ant-menu-dark.ant-menu-horizontal>.ant-menu-item:hover {
+    background-color: @yellow;
+    border-bottom: 4px solid @yellow;
+}
+
+.ant-menu-dark .ant-menu-item:hover,
+.ant-menu-dark .ant-menu-item-active,
+.ant-menu-dark .ant-menu-submenu-active,
+.ant-menu-dark .ant-menu-submenu-open,
+.ant-menu-dark .ant-menu-submenu-selected,
+.ant-menu-dark .ant-menu-submenu-title:hover {
+    color: #094268;
+    border-bottom: 2px solid @yellow;
+  
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+    color: #094268;
+    border-right: 0;
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+
+.content {
+height: calc(100vh - 66px - 70px)
+    
+}
+
+.ant-menu-dark .ant-menu-item>a {
+    color: @white;
+    font-size: 1.1vw;
+    font-weight: bold;
+}
+
+.signup-button {
+    background-color: @yellow;
+    color: @darkgrey;
+    font-weight: bolder;
+    margin-left: 20px;
+}
+
+.signup-button:hover {
+    background-color: @white;
+    color: @darkblue;
+    margin-left: 20px;
+}
+
+.left-menu, .right-menu {
+    
+}
+
+.menu-button, .vertical-nav {
+    display:none;
+}
+.ant-layout-sider {
+    background-color: @white;
+}
+
+.ant-layout-sider-zero-width-trigger, 
+.ant-layout-sider-zero-width-trigger-left {
+    display: none
+}
+
+
+
+
+
+
+
+@media (max-width: 1000px) {
+    .left-menu, .right-menu {
+        display: none;
+    }
+    .menu-button {
+        display: flex;
+        align-self: center;
+        align-content: center;
+        margin-right: 20px;
+    }
+
+    .vertical-nav {
+        display: flex
+    }
+}
