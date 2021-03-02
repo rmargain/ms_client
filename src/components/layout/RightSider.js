@@ -1,6 +1,6 @@
 import { Layout, Menu, Button } from "antd";
 import { Link } from "react-router-dom";
-import { useAuthInfo } from "../hooks/authContext";
+import { useAuthInfo } from "../../hooks/authContext";
 const { Sider } = Layout;
 
 function RightSider({collapsed, setCollapsed}) {

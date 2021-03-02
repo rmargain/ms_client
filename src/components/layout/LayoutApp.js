@@ -9,12 +9,14 @@ import LeftMenu from "./LeftMenu";
 import RightMenu from "./RightMenu";
 import LeftSlider from "./LeftSlider";
 import RightSider from "./RightSider";
+import { useAuthInfo } from "../../hooks/authContext";
 const {  Content, Footer } = Layout;
 
 
 function LayoutApp({ children }) {
   const [collapsed, setCollapsed] = useState(false)
   const [folded, setFolded] = useState(true)
+  const {user} = useAuthInfo()
   return (
     <Layout className="layout">
       <div className="header-container">
@@ -33,9 +35,31 @@ function LayoutApp({ children }) {
           />
         </div>
       </div>
-      <Layout>
-        <LeftSlider folded={folded} setFolded={setFolded} />
-        {folded ? <MenuUnfoldOutlined onClick={() => setFolded(!folded)} /> : <MenuFoldOutlined onClick={() => setFolded(!folded)}/>}
+      <Layout className='middle-layout'>
+        <div className='left-panel' >
+        {user ? (
+          <>
+          {folded ? (
+            <Button
+              onClick={() => setFolded(!folded)}
+              icon={<MenuUnfoldOutlined />}
+              shape="circle"
+              className="left-menu-button"
+            ></Button>
+          ) : (
+            <Button
+              onClick={() => setFolded(!folded)}
+              icon={<MenuFoldOutlined />}
+              shape="circle"
+              className="left-menu-button"
+            ></Button>
+          )}
+          </>
+        )
+          : null
+        }
+          <LeftSlider className='left-sider' folded={folded} setFolded={setFolded} />
+        </div>
         <Layout className="content">
           <Content
             className="site-layout-background"
@@ -43,6 +67,7 @@ function LayoutApp({ children }) {
               padding: 24,
               margin: 0,
               minHeight: 280,
+              overflow: 'auto',
             }}
           >
             {children}

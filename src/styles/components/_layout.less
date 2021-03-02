@@ -39,9 +39,6 @@
     margin: 8px 0 8px 16px;
 }
 
-.site-layout-background {
-    background: #fff;
-}
 
 .ant-layout-header {
     padding: 0 10px 0 10px;
@@ -106,9 +103,6 @@ height: calc(100vh - 66px - 70px)
     margin-left: 20px;
 }
 
-.left-menu, .right-menu {
-    
-}
 
 .menu-button, .vertical-nav {
     display:none;
@@ -122,10 +116,30 @@ height: calc(100vh - 66px - 70px)
     display: none
 }
 
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: @white;
+    border-right: 2px solid @yellow;
+}
+.ant-layout .layout {
+    background-color: @white;
+}
 
+.aver {
+    height: calc(100vh - 64px - 32px - 70px);
+    overflow: auto;
+}
 
+.site-layout-background {
+    background-color: @white;
+}
 
-
+.middle-layout {
+    display: flex;
+    flex-direction: row;
+}
 
 
 @media (max-width: 1000px) {

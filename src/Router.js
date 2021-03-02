@@ -1,10 +1,12 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import LayoutApp from "./components/LayoutApp";
+import LayoutApp from "./components/layout/LayoutApp";
 import PrivateRoute from "./components/PrivateRoute";
 import LoggedOutRoute from "./components/LoggedOutRoute";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import AccountConfirmation from "./pages/AccountConfirmation";
+import Kids from "./pages/MyStudents copy"
+
 
 const Home = () => <h1>Home</h1>;
 // const Signup = () => <h1>Signup</h1>
@@ -25,6 +27,7 @@ function Router() {
             path="/confirm/:confirmationCode"
             
           />
+          <PrivateRoute component={Kids} path="/my-kids" />
         </Switch>
       </LayoutApp>
     </BrowserRouter>
