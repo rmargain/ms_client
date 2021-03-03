@@ -15,7 +15,7 @@ const { SubMenu } = Menu;
 function LeftSlider({ folded, setFolded }) {
   const { user } = useAuthInfo();
   return (
-    <div className='aver'>
+    <div className="aver">
       {user ? (
         <Sider
           width={200}
@@ -54,19 +54,29 @@ function LeftSlider({ folded, setFolded }) {
             <Menu.Item key="sub5" icon={<UserOutlined />} title="Profile">
               Profile
             </Menu.Item>
-            <Menu.Item
-              key="sub6"
-              icon={<PlusSquareOutlined />}
-              title="BecomeSchool"
-            >
-              Become a School
-            </Menu.Item>
+            {!user.isSchool ? (
+              <Menu.Item
+                key="sub6"
+                icon={<PlusSquareOutlined />}
+                title="BecomeSchool"
+              >
+                Become a School
+              </Menu.Item>
+            ) : (
+              <Menu.Item
+                key="sub6"
+                icon={<PlusSquareOutlined />}
+                title="BecomeSchool"
+              >
+                Add New School
+              </Menu.Item>
+            )}
             {user.isSchool ? (
               <>
                 <Menu.Item key="sub7">
                   <Typography>My Schools</Typography>
                 </Menu.Item>
-                <SubMenu key="sub8" icon={<UserOutlined />} title="Messages">
+                <SubMenu key="sub8" icon={<MailOutlined />} title="Messages">
                   <Menu.Item key="5">Inbox</Menu.Item>
                   <Menu.Item key="6">Unread</Menu.Item>
                   <Menu.Item key="7">Sent</Menu.Item>

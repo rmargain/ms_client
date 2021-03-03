@@ -1,9 +1,9 @@
 import { Form, Typography, Col, Row, Button, Input, message, Select } from "antd";
-import { createStudent } from "../services/student";
+import { createStudent } from "../../services/student";
 
 const {Option} = Select
 
-function Student({setIsModalVisible}) {
+function Student({setIsModalVisible, students, setStudents}) {
   const [form] = Form.useForm();
 
   async function handleSubmit(studentInfo) {
@@ -28,16 +28,16 @@ function Student({setIsModalVisible}) {
           </Form.Item>
           <Form.Item name="level" label="Level:">
             <Select style={{width: '100%'}}>
-            <Option value='uno'>Kinder 3 / Pre-First</Option>
+            <Option value={0}>Kinder 3 / Pre-First</Option>
             <Option value={1}>Elementary - 1st</Option>
             <Option value={2}>Elementary - 2nd</Option>
             <Option value={3}>Elementary - 3rd</Option>
             <Option value={4}>Elementary - 4th</Option>
             <Option value={5}>Elementary - 5th</Option>
-            <Option value={6}>Elementary - 6th</Option>
+            <Option value={6}>Middle School - 6th</Option>
             <Option value={7}>Middle School - 7th</Option>
             <Option value={8}>Middle School - 8th</Option>
-            <Option value={9}>Middle School - 9th</Option>
+            <Option value={9}>High School - 9th</Option>
             <Option value={10}>High School - 10th</Option>
             <Option value={11}>High School - 11th</Option>
             <Option value={12}>High School - 12th</Option>

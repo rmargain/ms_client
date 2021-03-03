@@ -13,8 +13,9 @@ const _axios = axios.create({
 });
 
 export const createStudent = (student) => _axios.post("/create", student);
+export const updateStudent = (student) => _axios.patch(`${student._id}`, student)
 export const studentProfile = (studentId) => _axios.get(`/${studentId}`);
-export const studentsbySchoos = (schoolId) => _axios.get(`/${schoolId}`);
 export const studentsByUser = (_) => _axios.get(`/`);
+export const deleteStudent = (studentId) => _axios.delete(`/${studentId}`)
 // export const updateAvatar = (avatar) =>
 //   _axios.post("/avatar/change", { avatar });
