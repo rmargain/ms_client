@@ -60,7 +60,7 @@ function LeftSlider({ folded, setFolded }) {
                 icon={<PlusSquareOutlined />}
                 title="BecomeSchool"
               >
-                Become a School
+                <Link to="/add-school">Become a School</Link>
               </Menu.Item>
             ) : (
               <Menu.Item
@@ -68,7 +68,7 @@ function LeftSlider({ folded, setFolded }) {
                 icon={<PlusSquareOutlined />}
                 title="BecomeSchool"
               >
-                Add New School
+                <Link to="/add-school">Add New School</Link>
               </Menu.Item>
             )}
             {user.isSchool ? (

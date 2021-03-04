@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import AccountConfirmation from "./pages/AccountConfirmation";
 import Kids from "./pages/MyStudents copy"
+import BecomeSchool from "./pages/BecomeSchool";
 
 
 const Home = () => <h1>Home</h1>;
@@ -28,6 +29,7 @@ function Router() {
             
           />
           <PrivateRoute component={Kids} path="/my-kids" />
+          <PrivateRoute component={BecomeSchool} path="/add-school" />
         </Switch>
       </LayoutApp>
     </BrowserRouter>
