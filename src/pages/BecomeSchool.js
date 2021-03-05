@@ -1,11 +1,15 @@
 import { Form, Typography, Col, Row, Button, Input, Steps, Select } from "antd";
 import {useState} from "react";
 import { useAuthInfo } from "../hooks/authContext";
+import MaskedInput from 'antd-mask-input'
+import {CountryRegionData} from 'react-country-region-selector'
 
 const {Step} = Steps
 const {Option} = Select
+const CountryRegion = CountryRegionData
 
 function BecomeSchool({history}) {
+
   const [form] = Form.useForm();
   const { user } = useAuthInfo();
 const [current, setCurrent] = useState(-1)
@@ -13,8 +17,11 @@ const [status0, setStatus0] = useState("wait")
 const [status1, setStatus1] = useState("wait");
 const [status2, setStatus2] = useState("wait");
 const [status3, setStatus3] = useState("wait");
+const [selectedCountry, setSelectedCountry] = useState(null)
+const [regions, setRegions] = useState(null)
 const [language1, setLanguage1] = useState(null)
 const [language2, setLanguage2] = useState(null)
+
 
   function handleSubmit(schoolInfo) {
     
@@ -46,12 +53,23 @@ const [language2, setLanguage2] = useState(null)
     console.log(e)
   }
 
-  window.onbeforeunload = function () {
-    return `Your work will be lost. If you need to edit your previous responses try the "Back" button instead.`;
-  };
-
-console.log(current)
-console.log(window.location)
+  const handleCountry = (key) => {
+          const splitRegions = () => {
+          const regions = CountryRegionData[parseInt(key.key)][2].split("|");
+          let res = []
+          let trueRes = []
+          for (let i = 0 ; i <= regions.length-1; i++){
+          res.push([regions[i].split("~")])
+        }
+        for (let i=0 ; i<=res.length-1; i++){
+            trueRes.push(res[i][0][0])
+        }
+          setRegions(trueRes)
+    }
+    splitRegions()
+  }
+  console.log(regions)
+ 
 
   return (
     <>
@@ -73,11 +91,10 @@ console.log(window.location)
       ) : null}
       {current > -1 ? (
         <Steps
-          type="navigation"
           current={current}
-          responsive={true}
           size="small"
           progressDot
+          onChange={(e) => setCurrent(e)}
         >
           <Step progressDot title={status0} description="School Information" />
           <Step progressDot title={status1} description="Contact Information" />
@@ -98,7 +115,7 @@ console.log(window.location)
               <div className="section0">
                 <div className="section0-left">
                   <Form.Item name="name" label="School Name:">
-                    <Input type="text" />
+                    <Input type="text" required />
                   </Form.Item>
                   <Form.Item name="educationalMethod" label="Education Method:">
                     <Select style={{ width: "100%" }}>
@@ -131,7 +148,7 @@ console.log(window.location)
                   </Form.Item>
                   <Form.Item
                     name="educationalLevelMax"
-                    label="Maximum Educational Level:"
+                    label="Maximum Education Level:"
                   >
                     <Select style={{ width: "100%" }}>
                       <Option value={0}>Kinder 3 / Pre-First</Option>
@@ -174,6 +191,8 @@ console.log(window.location)
                       <Option value="Greek">Greek</Option>
                     </Select>
                   </Form.Item>
+                </div>
+                <div className="section0-right">
                   <Form.Item
                     name="secondaryEducationalLanguage"
                     label="Secondary Educational Language:"
@@ -196,10 +215,11 @@ console.log(window.location)
                       <Option value="Greek">Greek</Option>
                     </Select>
                   </Form.Item>
-                </div>
-                <div className="section0-right">
+                  <Form.Item value="tuition" label="Tuition:">
+                    <Input type="number" />
+                  </Form.Item>
                   <Form.Item value="generalInfo" label="About the School:">
-                    <Input.TextArea rows={10} />
+                    <Input.TextArea rows={8} />
                   </Form.Item>
                 </div>
               </div>
@@ -222,20 +242,52 @@ console.log(window.location)
                   <Input type="text" />
                 </Form.Item>
                 <Form.Item name="primaryContactPhone" label="Contact Phone:">
-                  <Input type="number" />
+                  <MaskedInput mask="(11)-111-111-1111" />
                 </Form.Item>
               </div>
               <div>
-                  
+                <Typography>Address</Typography>
+                <Form.Item name="street" label="Street:">
+                  <Input type="text" />
+                </Form.Item>
+                <div>
+                  <Form.Item name="extNum" label="Exterior No.:">
+                    <Input type="text" />
+                  </Form.Item>
+                  <Form.Item name="intNum" label="Interior No.:">
+                    <Input type="text" />
+                  </Form.Item>
+                </div>
+                <Form.Item name="city" label="City:">
+                  <Input type="text" />
+                </Form.Item>
+                <Form.Item name="country" label="Country:">
+                  <Select onChange={(value, key) => handleCountry(key)}>
+                    {CountryRegionData.map((country, index) => (
+                      <Option value={country[0]} key={index}>{country[0]}</Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item name="region" label="Region/State:">
+                  <Select>
+                    { regions ? ( 
+                        regions.map((region, index) => (
+                      <Option value={region} key={index}>{region}</Option>
+                    ))
+                    )
+                    : null
+                    }
+                  </Select>
+                </Form.Item>
               </div>
-
               <div className="section1-right"></div>
             </div>
           </Col>
         </>
       ) : null}
     </>
-  );
-}
+
+  )
+                }
 
 export default BecomeSchool;
