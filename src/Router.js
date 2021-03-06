@@ -6,7 +6,8 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import AccountConfirmation from "./pages/AccountConfirmation";
 import Kids from "./pages/MyStudents copy"
-import BecomeSchool from "./pages/BecomeSchool";
+// import BecomeSchool from "./pages/BecomeSchool";
+import BecomeSchool from "./pages/BecomeSchool copy"
 
 
 const Home = () => <h1>Home</h1>;

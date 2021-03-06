@@ -7,7 +7,6 @@ import "./styles/style.less";
 import Router from "./Router";
 
 ReactDOM.render(
-  
     <AuthProvider>
       <Router />
     </AuthProvider>,

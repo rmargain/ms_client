@@ -12,13 +12,13 @@ const _axios = axios.create({
   withCredentials: true,
 });
 
-export const createSchool = () => _axios.post("/create");
-export const updateSchool = (schoolId) =>
-  _axios.patch(`/update/${student._id}`, school);
+export const createSchool = (schoolInfo) => _axios.post("/create", schoolInfo);
+export const updateSchool = (schoolId, school) =>
+  _axios.patch(`/update/${school._id}`, school);
 export const getAllSchools = () => _axios.get(`/all`);
 export const getSchoolsByUser = () => _axios.get(`/`);
 export const getAllFilteredSchools = (_) => _axios.get(`/`);
 export const getSchoolById = (schoolId) => _axios.get(`/${schoolId}`);
 export const studentsbySchool = (schoolId) => _axios.get(`/${schoolId}`);
 export const deleteSchool = (schoolId) => _axios.delete(`/${schoolId}`);
-export const uploadImages = (image) => _axios.post("/upload", image);
+export const uploadImages = (image, schoolId) => _axios.post(`/upload/${schoolId}`, image);
