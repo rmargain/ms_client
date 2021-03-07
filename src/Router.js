@@ -8,6 +8,7 @@ import AccountConfirmation from "./pages/AccountConfirmation";
 import Kids from "./pages/MyStudents copy"
 // import BecomeSchool from "./pages/BecomeSchool";
 import BecomeSchool from "./pages/BecomeSchool copy"
+import SchoolMap from './pages/SchoolMap'
 
 
 const Home = () => <h1>Home</h1>;
@@ -31,6 +32,7 @@ function Router() {
           />
           <PrivateRoute component={Kids} path="/my-kids" />
           <PrivateRoute component={BecomeSchool} path="/add-school" />
+          <Route component={SchoolMap} path='/find-school' />
         </Switch>
       </LayoutApp>
     </BrowserRouter>

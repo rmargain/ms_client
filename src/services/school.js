@@ -22,3 +22,4 @@ export const getSchoolById = (schoolId) => _axios.get(`/${schoolId}`);
 export const studentsbySchool = (schoolId) => _axios.get(`/${schoolId}`);
 export const deleteSchool = (schoolId) => _axios.delete(`/${schoolId}`);
 export const uploadImages = (image, schoolId) => _axios.post(`/upload/${schoolId}`, image);
+export const deleteImage = (image, schoolId) => _axios.patch(`/delete/${schoolId}`, image)

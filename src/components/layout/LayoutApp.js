@@ -14,7 +14,7 @@ const {  Content, Footer } = Layout;
 
 
 function LayoutApp({ children }) {
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(true)
   const [folded, setFolded] = useState(true)
   const {user} = useAuthInfo()
   return (

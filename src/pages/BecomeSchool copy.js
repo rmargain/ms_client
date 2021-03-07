@@ -8,6 +8,7 @@ import {
   Steps,
   Select,
   Upload,
+  Image,
 } from "antd";
 import { useState, useEffect, useRef } from "react";
 import { useAuthInfo } from "../hooks/authContext";
@@ -18,8 +19,10 @@ import {
   PushpinTwoTone,
   LoadingOutlined,
   PlusOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
-import { createSchool, uploadImages } from "../services/school";
+import { createSchool, uploadImages, deleteImage } from "../services/school";
+import { Link } from "react-router-dom";
 
 const { Step } = Steps;
 const { Option } = Select;
@@ -48,7 +51,6 @@ function BecomeSchool() {
     heigth: "350px",
     zoom: 13,
   });
-
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -116,16 +118,18 @@ function BecomeSchool() {
       const schoolInfo = { ...schoolInfo0, address, lat, lng, ...rest };
       setFinalSchoolInfo(schoolInfo);
       console.log(finalSchoolInfo);
-      const { data: {user, school} } = await createSchool(schoolInfo);
-      setUser(user)
-      setSchool(school)
+      const {
+        data: { user, school },
+      } = await createSchool(schoolInfo);
+      setUser(user);
+      setSchool(school);
     } else if (current === 2) {
       setStatus2("Finished");
       setStatus3("In Progress");
       const newCurrent = current + 1;
       setCurrent(newCurrent);
     }
-  }
+  };
 
   const handleNext = () => {
     if (current === -1) {
@@ -177,16 +181,21 @@ function BecomeSchool() {
   );
 
   const handleUpload = async (file) => {
-    console.log(file);
     setLoading(true);
     const fdata = new FormData();
     fdata.append("image", file);
-    console.log({ fdata });
-    const {_id} = school
-    console.log(_id)
+    const { _id } = school;
     const { data: updatedSchool } = await uploadImages(fdata, _id);
-    console.log(school)
+    setSchool(updatedSchool);
     setLoading(false);
+  };
+
+  const handleDeleteImage = async (image) => {
+    const {_id} = school
+    console.log(image)
+    console.log(_id)
+    const {data} = await deleteImage(image, _id)
+    setSchool(data)
   };
 
   return (
@@ -237,11 +246,15 @@ function BecomeSchool() {
             >
               <div className="section0">
                 <div className="section0-left">
-                  <Form.Item name="name" label="School Name:">
+                  <Form.Item name="name" label="School Name:" required>
                     <Input type="text" required />
                   </Form.Item>
-                  <Form.Item name="educationalMethod" label="Education Method:">
-                    <Select style={{ width: "100%" }}>
+                  <Form.Item
+                    name="educationalMethod"
+                    label="Education Method:"
+                    required
+                  >
+                    <Select style={{ width: "100%" }} required>
                       <Option value="Montessori">Montessori</Option>
                       <Option value="Waldorf">Waldorf</Option>
                       <Option value="Self-directed">Self-Directed</Option>
@@ -250,7 +263,7 @@ function BecomeSchool() {
                     </Select>
                   </Form.Item>
                   <Form.Item
-                    name="educationalLevelMin"
+                    name="educationLevelMin"
                     label="Minimum Education Level:"
                   >
                     <Select style={{ width: "100%" }}>
@@ -270,7 +283,7 @@ function BecomeSchool() {
                     </Select>
                   </Form.Item>
                   <Form.Item
-                    name="educationalLevelMax"
+                    name="educationLevelMax"
                     label="Maximum Education Level:"
                   >
                     <Select style={{ width: "100%" }}>
@@ -292,10 +305,12 @@ function BecomeSchool() {
                   <Form.Item
                     name="primaryEducationalLanguage"
                     label="Primary Educational Language:"
+                    required
                   >
                     <Select
                       style={{ width: "100%" }}
                       onChange={(value) => handleLanguage1(value)}
+                      required
                     >
                       <Option value="Spanish">Spanish</Option>
                       <Option value="English">English</Option>
@@ -362,19 +377,31 @@ function BecomeSchool() {
             >
               <div className="section1">
                 <div className="section1-left">
-                  <Form.Item name="primaryContactName" label="Contact Name:">
-                    <Input type="text" />
+                  <Form.Item
+                    name="primaryContactName"
+                    label="Contact Name:"
+                    required
+                  >
+                    <Input type="text" required />
                   </Form.Item>
-                  <Form.Item name="primaryContactEmail" label="Contact Email:">
-                    <Input type="email" />
+                  <Form.Item
+                    name="primaryContactEmail"
+                    label="Contact Email:"
+                    required
+                  >
+                    <Input type="email" required />
                   </Form.Item>
-                  <Form.Item name="primaryContactPhone" label="Contact Phone:">
-                    <MaskedInput mask="(11)-111-111-1111" />
+                  <Form.Item
+                    name="primaryContactPhone"
+                    label="Contact Phone:"
+                    required
+                  >
+                    <MaskedInput mask="(11)-111-111-1111" required />
                   </Form.Item>
                   <div>
                     <Typography>Address</Typography>
-                    <Form.Item name="street" label="Street:">
-                      <Input type="text" />
+                    <Form.Item name="street" label="Street:" required>
+                      <Input type="text" required />
                     </Form.Item>
                     <div className="address-numbers">
                       <Form.Item
@@ -393,11 +420,14 @@ function BecomeSchool() {
                       </Form.Item>
                     </div>
                   </div>
-                  <Form.Item name="city" label="City:">
-                    <Input type="text" />
+                  <Form.Item name="city" label="City:" required>
+                    <Input type="text" required />
                   </Form.Item>
-                  <Form.Item name="country" label="Country:">
-                    <Select onChange={(value, key) => handleCountry(key)}>
+                  <Form.Item name="country" label="Country:" required>
+                    <Select
+                      onChange={(value, key) => handleCountry(key)}
+                      required
+                    >
                       {CountryRegionData.map((country, index) => (
                         <Option value={country[0]} key={index}>
                           {country[0]}
@@ -405,7 +435,7 @@ function BecomeSchool() {
                       ))}
                     </Select>
                   </Form.Item>
-                  <Form.Item name="region" label="Region/State:">
+                  <Form.Item name="region" label="Region/State:" required>
                     <Select>
                       {regions
                         ? regions.map((region, index) => (
@@ -415,6 +445,9 @@ function BecomeSchool() {
                           ))
                         : null}
                     </Select>
+                  </Form.Item>
+                  <Form.Item name="zipcode" label="Zipcode:" required>
+                    <Input type="text" required minLength={5} />
                   </Form.Item>
                 </div>
                 <div className="section1-right">
@@ -450,15 +483,55 @@ function BecomeSchool() {
             </Form>
           </Col>
         ) : current === 2 ? (
-          <Upload
-            name="avatar"
-            showUploadList={false}
-            beforeUpload={handleUpload}
-            // listType="picture-card"
-            // className="avatar-uploader"
-          >
-            <Button>{uploadButton}</Button>
-          </Upload>
+          <>
+            <Upload
+              name="image"
+              showUploadList={false}
+              beforeUpload={handleUpload}
+              listType="picture-card"
+            >
+              <div>{uploadButton}</div>
+            </Upload>
+            {school && school.images.length >= 1
+              ? school.images.map((image, index) => (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "Column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      src={image}
+                      key={index}
+                      width={150}
+                      style={{
+                        border: "1px solid blue",
+                        margin: "15px",
+                        padding: "15px",
+                        height: "auto",
+                      }}
+                    />
+                    <DeleteOutlined
+                      onClick={() => handleDeleteImage(image)}
+                      imgae={image}
+                    />
+                  </div>
+                ))
+              : null}
+            <Button type="primary" onClick={handleNext} block size="small">
+              Next
+            </Button>
+          </>
+        ) : current === 3 ? (
+          <div style={{display:'flex', flexDirection: 'column'}}>
+            <Typography.Title level={2}>
+              Congratulations you successfully registered your School.
+            </Typography.Title>
+            <Button type="primary"  size="small">
+              <Link to="/my-schools"> Click to go to My Schools</Link>
+            </Button>
+          </div>
         ) : null}
       </Row>
     </>
