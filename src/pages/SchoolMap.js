@@ -6,13 +6,17 @@ import {
 } from "@ant-design/icons";
 import {getAllSchools} from '../services/school'
 import SchoolCard from '../components/school/SchoolCard.js'
+import {Link} from 'react-router-dom'
+import { useAuthInfo } from "../hooks/authContext";
+import  StudentApplication  from "../components/application/ApplicationForm";
 
 function SchoolMap() {
-
+const {user} = useAuthInfo()
 const [coords, setCoords] = useState([-99.1332, 19.4326]);
 const [allSchools, setAllSchools] = useState(null);
 const [selectedSchool, setselectedSchool] = useState(null);
 const [isModalVisible, setIsModalVisible] = useState(false);
+const [isModal2Visible, setIsModal2Visible] = useState(false);
 const [viewport, setViewport] = useState({
   latitude: coords[1],
   longitude: coords[2],
@@ -57,18 +61,43 @@ useEffect(() => {
         <Typography.Title level={3}>Seach Schools Near Me</Typography.Title>
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={24} md={24}>
-           <Modal
-                            visible={isModalVisible}
-                            onOk={handleOk}
-                            onCancel={handleCancel}
-                          >
-                            <SchoolCard
-                              style={{ width: "90vw", padding: "15px" }}
-                              school={selectedSchool}
-                            />
-                            
-                           
-                          </Modal>
+            <Modal
+              visible={isModalVisible}
+              onOk={handleOk}
+              onCancel={handleCancel}
+              title={selectedSchool ? selectedSchool.name : null}
+            >
+              <SchoolCard
+                style={{ width: "90vw", padding: "15px" }}
+                school={selectedSchool}
+              />
+              {user ? (
+                <Button
+                  className="quick-apply-button"
+                  s
+                  hape="round"
+                  onClick={() => {
+                    setIsModal2Visible(true);
+                    setIsModalVisible(false);
+                  }}
+                >
+                  Quick Apply Free!
+                </Button>
+              ) : (
+                <Button disabled className="quick-apply-button" shape="round">
+                  <Link to="/login">Login to Apply!</Link>
+                </Button>
+              )}
+            </Modal>
+
+            <Modal
+              visible={isModal2Visible}
+              footer={null}
+              onCancel={() => setIsModal2Visible(false)}
+              title={selectedSchool ? selectedSchool.name : null}
+            >
+              <StudentApplication selectedSchool={selectedSchool} setIsModal2Visible={setIsModal2Visible}/>
+            </Modal>
 
             <ReactMapGl
               {...viewport}
@@ -86,7 +115,7 @@ useEffect(() => {
                         longitude={school.location.coordinates[0]}
                       >
                         <Button
-                          style={{ backgroundColor: "#be79aae" }}
+                          className="map-school-button"
                           shape="circle"
                           onClick={(e) => {
                             e.preventDefault();
@@ -96,7 +125,7 @@ useEffect(() => {
                           icon={
                             <BankTwoTone
                               style={{ fontSize: "1em" }}
-                              twoToneColor="#FF0000"
+                              twoToneColor="#33393d"
                             />
                           }
                         ></Button>

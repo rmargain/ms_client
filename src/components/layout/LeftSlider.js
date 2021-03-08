@@ -87,7 +87,7 @@ function LeftSlider({ folded, setFolded }) {
                   icon={<BankOutlined />}
                   title="My Schools"
                 >
-                  Schools
+                  <Link to="/my-schools">Schools</Link>
                 </Menu.Item>
                 <SubMenu
                   key="sub10"

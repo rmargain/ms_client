@@ -4,7 +4,7 @@ import axios from "axios";
 const baseURL =
   process.env.NODE_ENV === "production"
     ? "algo" /* TODO: Cambiar por ruta en produccion */
-    : "http://localhost:3001/student";
+    : "http://localhost:3001/application";
 
 const _axios = axios.create({
   baseURL,
@@ -12,10 +12,13 @@ const _axios = axios.create({
   withCredentials: true,
 });
 
-export const createStudent = (student) => _axios.post("/create", student);
-export const updateStudent = (student) => _axios.patch(`/${student._id}`, student)
-export const studentProfile = (studentId) => _axios.get(`/${studentId}`);
-export const studentsByUser = (_) => _axios.get(`/`);
-export const deleteStudent = (studentId) => _axios.delete(`/${studentId}`)
+export const createApplication = (schoolId, application) => _axios.post(`/${schoolId}`, application);
+export const cancelApplication = (applicationId, message) =>
+  _axios.patch(`/cancel/${applicationId}`, message);
+export const approveApplication = (applicationId, body) =>
+  _axios.patch(`/cancel/${applicationId}`, body);
+export const getApplicationsbySchool = (schoolId) => _axios.get(`/school/${schoolId}`);
+export const getApplicationById = (applicationId) => _axios.get(`/${applicationId}`);
+
 // export const updateAvatar = (avatar) =>
 //   _axios.post("/avatar/change", { avatar });

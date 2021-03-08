@@ -21,16 +21,18 @@ import {
   PlusOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { createSchool, uploadImages, deleteImage } from "../services/school";
+import { updateSchool, uploadImages, deleteImage, getSchoolById } from "../services/school";
 import { Link } from "react-router-dom";
 
 const { Step } = Steps;
 const { Option } = Select;
 
-function BecomeSchool() {
+function BecomeSchool(e, {props}) {
+  console.log(props)
+  const {schoolId} = e.match.params
   const [form] = Form.useForm();
   const { user, setUser } = useAuthInfo();
-  const [current, setCurrent] = useState(-1);
+  const [current, setCurrent] = useState(0);
   const [status0, setStatus0] = useState("wait");
   const [status1, setStatus1] = useState("wait");
   const [status2, setStatus2] = useState("wait");
@@ -43,7 +45,6 @@ function BecomeSchool() {
   const [schoolInfo1, setSchoolInfo1] = useState(null);
   const [finalSchoolInfo, setFinalSchoolInfo] = useState(null);
   const [school, setSchool] = useState(null);
-
   const [viewport, setViewport] = useState({
     latitude: coords[1],
     longitude: coords[2],
@@ -52,37 +53,52 @@ function BecomeSchool() {
     zoom: 13,
   });
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((result) => {
-        setCoords([result.coords.longitude, result.coords.latitude]);
-      });
-    }
-  }, [navigator.geolocation]);
 
-  useEffect(() => {
+
+
+
+useEffect( () => {
+  const getSchool = async () => {
+    const {data} = await getSchoolById(schoolId)
+    const {address, ...rest} = data.school
+    const {street, extNum, intNum, city, region, country, zipcode} = address
+    const schoolData = {
+      street,
+      extNum,
+      intNum,
+      city,
+      region,
+      country,
+      zipcode,
+      ...rest
+    };
+    setSchool(schoolData)
+    setPointCoords([data.school.location.coordinates[0], data.school.location.coordinates[1]])
+    setCoords([data.school.location.coordinates[0], data.school.location.coordinates[1]])
     setViewport({
-      latitude: coords[1],
-      longitude: coords[0],
+      latitude: data.school.location.coordinates[1],
+      longitude: data.school.location.coordinates[0],
       width: "100%",
       height: "50vh",
       zoom: 13,
     });
-  }, [coords]);
+  }
+  getSchool()
+  
+}, [])
 
-  useEffect(() => {
-    setPointCoords([viewport.longitude, viewport.latitude]);
-  }, [viewport]);
+form.setFieldsValue(school)
+
 
   const handleDrag = (e) => {
     setPointCoords(e.lngLat);
   };
 
+console.log(pointCoords)
+  
+
   const handleSubmit = async (info) => {
-    if (current === -1) {
-      setCurrent(0);
-      setStatus0("In Progress");
-    } else if (current === 0) {
+   if (current === 0) {
       setStatus0("Finished");
       setStatus1("In Progress");
       setSchoolInfo0(info);
@@ -117,12 +133,9 @@ function BecomeSchool() {
       const lng = pointCoords[0];
       const schoolInfo = { ...schoolInfo0, address, lat, lng, ...rest };
       setFinalSchoolInfo(schoolInfo);
-      console.log(finalSchoolInfo);
       const {
-        data: { user, school },
-      } = await createSchool(schoolInfo);
-      setUser(user);
-      setSchool(school);
+        data} = await updateSchool(schoolId, finalSchoolInfo);
+      setSchool(data.school);
     } else if (current === 2) {
       setStatus2("Finished");
       setStatus3("In Progress");
@@ -131,11 +144,11 @@ function BecomeSchool() {
     }
   };
 
+
+console.log(school)
+
   const handleNext = () => {
-    if (current === -1) {
-      setCurrent(0);
-      setStatus0("In Progress");
-    } else if (current === 0) {
+    if (current === 0) {
       setStatus0("Finished");
       setStatus1("In Progress");
       const newCurrent = current + 1;
@@ -153,9 +166,6 @@ function BecomeSchool() {
     }
   };
 
-  const handleLanguage1 = (e) => {
-    console.log(e);
-  };
 
   const handleCountry = (key) => {
     const splitRegions = () => {
@@ -184,8 +194,7 @@ function BecomeSchool() {
     setLoading(true);
     const fdata = new FormData();
     fdata.append("image", file);
-    const { _id } = school;
-    const { data: updatedSchool } = await uploadImages(fdata, _id);
+    const { data: updatedSchool } = await uploadImages(fdata, schoolId);
     setSchool(updatedSchool);
     setLoading(false);
   };
@@ -200,23 +209,8 @@ function BecomeSchool() {
 
   return (
     <>
-      <Typography.Title level={3}>School Application</Typography.Title>
-      {current === -1 && !user.isSchool ? (
-        <>
-          <Typography.Title level={5}>
-            Click "Begin" to onboard your first school{" "}
-          </Typography.Title>
-          <Button onClick={handleNext}>Begin</Button>
-        </>
-      ) : current === -1 && user.isSchool ? (
-        <>
-          <Typography.Title level={5}>
-            Click "Begin" to add a new school{" "}
-          </Typography.Title>
-          <Button onClick={handleNext}>Begin</Button>
-        </>
-      ) : null}
-      {current > -1 ? (
+      <Typography.Title level={3}>Edit School Information</Typography.Title>
+    
         <Steps
           current={current}
           size="small"
@@ -233,7 +227,6 @@ function BecomeSchool() {
           <Step progressDot title={status2} description="Image Upload" />
           <Step progressDot title={status3} description="Submit" />
         </Steps>
-      ) : null}
 
       <Row gutter={[16, 16]}>
         {current === 0 ? (
@@ -309,7 +302,6 @@ function BecomeSchool() {
                   >
                     <Select
                       style={{ width: "100%" }}
-                      onChange={(value) => handleLanguage1(value)}
                       required
                     >
                       <Option value="Spanish">Spanish</Option>
@@ -459,7 +451,10 @@ function BecomeSchool() {
                       {...viewport}
                       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
                       mapStyle="mapbox://styles/robertomargain/cklx6uv1g01cb17lhikbi2c4g"
-                      onViewportChange={(viewport) => setViewport(viewport)}
+                      onViewportChange={(viewport) => {
+                        setViewport(viewport)
+                        setPointCoords([viewport.longitude, viewport.latitude]);
+                        }}
                     >
                       <NavigationControl style={{ left: 10, top: 10 }} />
                       <Marker
@@ -526,7 +521,7 @@ function BecomeSchool() {
         ) : current === 3 ? (
           <div style={{display:'flex', flexDirection: 'column'}}>
             <Typography.Title level={2}>
-              Congratulations you successfully registered your School.
+              Congratulations you successfully edited your School.
             </Typography.Title>
             <Button type="primary"  size="small">
               <Link to="/my-schools"> Click to go to My Schools</Link>

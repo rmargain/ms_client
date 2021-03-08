@@ -14,7 +14,7 @@ const _axios = axios.create({
 
 export const createSchool = (schoolInfo) => _axios.post("/create", schoolInfo);
 export const updateSchool = (schoolId, school) =>
-  _axios.patch(`/update/${school._id}`, school);
+  _axios.patch(`/update/${schoolId}`, school);
 export const getAllSchools = () => _axios.get(`/all`);
 export const getSchoolsByUser = () => _axios.get(`/`);
 export const getAllFilteredSchools = (_) => _axios.get(`/`);
