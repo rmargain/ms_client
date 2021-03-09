@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
-import { Table, Tag, Space, Button } from "antd";
-import {studentProfile} from "../../services/student";
-import {formattedDate} from "../../utils/dateFormatter"
+import { Table, Tag, Space, Button, Modal, Typography } from "antd";
+import { studentProfile } from "../../services/student";
+import { formattedDate } from "../../utils/dateFormatter";
+import FollowUpMessage from "../messages/FollowUp";
+import CancelApplication from '../application/CancelApplication'
 
-function StudentInfo({ focusStudent }) {
+
+function StudentInfo({ focusStudent, setIsModal3Visible }) {
   const { _id } = focusStudent;
   const [applications, setApplications] = useState(null);
+  const [focusApplication, setFocusApplication] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModal2Visible, setIsModal2Visible] = useState(false);
+
+ 
 
   useEffect(() => {
     async function currentStudentApplications() {
@@ -13,11 +21,30 @@ function StudentInfo({ focusStudent }) {
       setApplications(data._applications);
     }
     currentStudentApplications();
-    
-  }, [_id]);
+  }, [_id, isModal2Visible]);
 
-  console.log(_id);
-  console.log(applications)
+  const handleFollowUp = (record) => {
+    setFocusApplication(record);
+    setIsModalVisible(true)
+  };
+
+  const onCancel = () =>{
+    setFocusApplication(null);
+    setIsModalVisible(false);
+  }
+
+  
+  const onCancel2 = () => {
+    setIsModal2Visible(false)
+
+  }
+  
+  const handleCancellation = (record) => {
+    setFocusApplication(record)
+    setIsModal2Visible(true)
+  }
+
+
 
   const columns = [
     {
@@ -37,6 +64,8 @@ function StudentInfo({ focusStudent }) {
               ? "geekblue"
               : text === "Aproved"
               ? "green"
+              : text === "Cancelled"
+              ? "grey"
               : "volcano"
           }
         >
@@ -53,25 +82,51 @@ function StudentInfo({ focusStudent }) {
     {
       title: "Follow Up",
       key: "follow-up",
-      render: (_id) => <Button>Send Message</Button>,
+      render: (record) => (
+        !record.isCancelled ? (
+        <Button onClick={() => handleFollowUp(record)}>Follow Up</Button>
+        )
+        : <Button disabled>Follow Up</Button>
+      ),
       //TODO: agregar componente modal para enviar mensaje
     },
     {
       title: "Cancel Application",
-      dataIndex: "created_at",
-      key: "application-date",
-      render: (_id) => <Button>Send Cancelation</Button>,
+      key: "cancel-application",
+      render: (record) =>
+        !record.isCancelled ? (
+          <Button onClick={() => handleCancellation(record)}>Cancel Application</Button>
+        ) : (
+          <Button disabled>Send Cancelation</Button>
+        ),
+
       //TODO: agregar componente modal para confirmar cancelación
     },
   ];
 
   return (
-    <Table
-      columns={columns}
-      pagination={{ pageSize: 6 }}
-      rowKey={(record) => record._id}
-      dataSource={applications}
-    />
+    <>
+    {applications ? (
+      <Table
+        columns={columns}
+        pagination={{ pageSize: 6 }}
+        rowKey={(record) => record._id}
+        dataSource={applications}
+      />
+    ): null}
+      {focusApplication ? (
+        <>
+        <Modal visible={isModalVisible} onCancel={onCancel} footer={null}> 
+        <FollowUpMessage focusApplication={focusApplication} setIsModalVisible={setIsModalVisible}></FollowUpMessage>
+        </Modal>
+
+        <Modal visible={isModal2Visible} onCancel={onCancel2} footer={null}> 
+          <CancelApplication focusApplication={focusApplication} setIsModal2Visible={setIsModal2Visible}></CancelApplication>
+        </Modal>
+        </>
+      ) : null }
+      
+    </>
   );
 }
 

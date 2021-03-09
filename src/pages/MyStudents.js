@@ -38,7 +38,6 @@ function Kids() {
   }, [isModalVisible, isModal2Visible, isModal4Visible]);
 
 
-
   const showModal = () => {
     setIsModalVisible(true);
   };
