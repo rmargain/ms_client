@@ -94,7 +94,6 @@ form.setFieldsValue(school)
     setPointCoords(e.lngLat);
   };
 
-console.log(pointCoords)
   
 
   const handleSubmit = async (info) => {
@@ -145,7 +144,7 @@ console.log(pointCoords)
   };
 
 
-console.log(school)
+console.log(pointCoords)
 
   const handleNext = () => {
     if (current === 0) {

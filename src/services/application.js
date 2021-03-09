@@ -18,7 +18,8 @@ export const cancelApplication = (applicationId, message) =>
 export const approveApplication = (applicationId, body) =>
   _axios.patch(`/cancel/${applicationId}`, body);
 export const getApplicationsbySchool = (schoolId) => _axios.get(`/school/${schoolId}`);
+export const getApplicationsbySchoolUser = () => _axios.get(`/`);
 export const getApplicationById = (applicationId) => _axios.get(`/${applicationId}`);
+export const getApplicationByUser = (userId) => _axios.get(`/user/${userId}`);
 
-// export const updateAvatar = (avatar) =>
-//   _axios.post("/avatar/change", { avatar });
+

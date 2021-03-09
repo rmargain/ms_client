@@ -11,11 +11,12 @@ import BecomeSchool from "./pages/BecomeSchool"
 import SchoolMap from './pages/SchoolMap'
 import MySchools from './pages/MySchools'
 import EditSchool from './pages/EditSchool'
+import UserApplications from './pages/UserApplications'
 
 
 const Home = () => <h1>Home</h1>;
-// const Signup = () => <h1>Signup</h1>
-// const Login = () => <h1>Login</h1>
+const MyApplications = () => <h1>Signup</h1>
+const UserMessages = () => <h1>Login</h1>
 const Profile = () => <h1>Profile</h1>;
 
 function Router() {
@@ -23,19 +24,23 @@ function Router() {
     <BrowserRouter>
       <LayoutApp>
         <Switch>
+          {/* Home */}
           <Route component={Home} path="/" exact />
+          {/* Auth */}
           <LoggedOutRoute component={Signup} path="/signup" />
           <LoggedOutRoute component={Login} path="/login" />
+          {/* Profile */}
           <PrivateRoute component={Profile} path="/profile" />
-          <Route
-            component={AccountConfirmation}
-            path="/confirm/:confirmationCode"
-            
-          />
+          {/* Account Confirmation */}
+          <Route component={AccountConfirmation} path="/confirm/:confirmationCode"/>
+          {/* User Routes  */}
           <PrivateRoute component={Kids} path="/my-kids" />
           <PrivateRoute component={BecomeSchool} path="/add-school" />
           <PrivateRoute component={MySchools} path='/my-schools' />
-          <PrivateRoute component={EditSchool} path='/edit-school/:schoolId' />
+          <PrivateRoute component={EditSchool} path='/edit-school/:schoolId'/>
+          <PrivateRoute component={UserApplications} path='/my-applications' />
+          <PrivateRoute component={UserMessages} path='/messages' />
+          {/* Search Schools */}
           <Route component={SchoolMap} path='/find-school' />
         </Switch>
       </LayoutApp>

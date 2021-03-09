@@ -49,10 +49,10 @@ function LeftSlider({ folded, setFolded }) {
               icon={<FormOutlined />}
               title="My Applications"
             >
-              My Applications
+              <Link to="/my-applications">My Applications</Link>
             </Menu.Item>
             <Menu.Item key="sub5" icon={<UserOutlined />} title="Profile">
-              Profile
+              <Link to="/profile">Profile</Link>
             </Menu.Item>
             {!user.isSchool ? (
               <Menu.Item
