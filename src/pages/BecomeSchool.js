@@ -15,6 +15,7 @@ import { useAuthInfo } from "../hooks/authContext";
 import MaskedInput from "antd-mask-input";
 import { CountryRegionData } from "react-country-region-selector";
 import ReactMapGl, { Marker, NavigationControl } from "react-map-gl";
+import mapboxgl from "mapbox-gl";
 import {
   PushpinTwoTone,
   LoadingOutlined,
@@ -23,6 +24,9 @@ import {
 } from "@ant-design/icons";
 import { createSchool, uploadImages, deleteImage } from "../services/school";
 import { Link } from "react-router-dom";
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const { Step } = Steps;
 const { Option } = Select;

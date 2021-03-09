@@ -12,7 +12,6 @@
     "antd-mask-input": "^0.1.14",
     "axios": "^0.21.1",
     "craco-less": "^1.17.1",
-    "mapbox-gl": "^2.1.1",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-country-region-selector": "^3.0.2",
@@ -22,7 +21,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "url-loader": "^4.1.1",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "worker-loader": "^3.0.8"
   },
   "scripts": {
     "start": "craco start",

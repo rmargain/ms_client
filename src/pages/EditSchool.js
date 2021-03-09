@@ -15,21 +15,30 @@ import { useAuthInfo } from "../hooks/authContext";
 import MaskedInput from "antd-mask-input";
 import { CountryRegionData } from "react-country-region-selector";
 import ReactMapGl, { Marker, NavigationControl } from "react-map-gl";
+import mapboxgl from "mapbox-gl";
 import {
   PushpinTwoTone,
   LoadingOutlined,
   PlusOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { updateSchool, uploadImages, deleteImage, getSchoolById } from "../services/school";
+import {
+  updateSchool,
+  uploadImages,
+  deleteImage,
+  getSchoolById,
+} from "../services/school";
 import { Link } from "react-router-dom";
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const { Step } = Steps;
 const { Option } = Select;
 
-function BecomeSchool(e, {props}) {
-  console.log(props)
-  const {schoolId} = e.match.params
+function BecomeSchool(e, { props }) {
+  console.log(props);
+  const { schoolId } = e.match.params;
   const [form] = Form.useForm();
   const { user, setUser } = useAuthInfo();
   const [current, setCurrent] = useState(0);
@@ -53,51 +62,57 @@ function BecomeSchool(e, {props}) {
     zoom: 13,
   });
 
-
-
-
-
-useEffect( () => {
-  const getSchool = async () => {
-    const {data} = await getSchoolById(schoolId)
-    const {address, ...rest} = data.school
-    const {street, extNum, intNum, city, region, country, zipcode} = address
-    const schoolData = {
-      street,
-      extNum,
-      intNum,
-      city,
-      region,
-      country,
-      zipcode,
-      ...rest
+  useEffect(() => {
+    const getSchool = async () => {
+      const { data } = await getSchoolById(schoolId);
+      const { address, ...rest } = data.school;
+      const {
+        street,
+        extNum,
+        intNum,
+        city,
+        region,
+        country,
+        zipcode,
+      } = address;
+      const schoolData = {
+        street,
+        extNum,
+        intNum,
+        city,
+        region,
+        country,
+        zipcode,
+        ...rest,
+      };
+      setSchool(schoolData);
+      setPointCoords([
+        data.school.location.coordinates[0],
+        data.school.location.coordinates[1],
+      ]);
+      setCoords([
+        data.school.location.coordinates[0],
+        data.school.location.coordinates[1],
+      ]);
+      setViewport({
+        latitude: data.school.location.coordinates[1],
+        longitude: data.school.location.coordinates[0],
+        width: "100%",
+        height: "50vh",
+        zoom: 13,
+      });
     };
-    setSchool(schoolData)
-    setPointCoords([data.school.location.coordinates[0], data.school.location.coordinates[1]])
-    setCoords([data.school.location.coordinates[0], data.school.location.coordinates[1]])
-    setViewport({
-      latitude: data.school.location.coordinates[1],
-      longitude: data.school.location.coordinates[0],
-      width: "100%",
-      height: "50vh",
-      zoom: 13,
-    });
-  }
-  getSchool()
-  
-}, [])
+    getSchool();
+  }, []);
 
-form.setFieldsValue(school)
-
+  form.setFieldsValue(school);
 
   const handleDrag = (e) => {
     setPointCoords(e.lngLat);
   };
 
-  
-
   const handleSubmit = async (info) => {
-   if (current === 0) {
+    if (current === 0) {
       setStatus0("Finished");
       setStatus1("In Progress");
       setSchoolInfo0(info);
@@ -132,8 +147,7 @@ form.setFieldsValue(school)
       const lng = pointCoords[0];
       const schoolInfo = { ...schoolInfo0, address, lat, lng, ...rest };
       setFinalSchoolInfo(schoolInfo);
-      const {
-        data} = await updateSchool(schoolId, finalSchoolInfo);
+      const { data } = await updateSchool(schoolId, finalSchoolInfo);
       setSchool(data.school);
     } else if (current === 2) {
       setStatus2("Finished");
@@ -143,8 +157,7 @@ form.setFieldsValue(school)
     }
   };
 
-
-console.log(pointCoords)
+  console.log(pointCoords);
 
   const handleNext = () => {
     if (current === 0) {
@@ -164,7 +177,6 @@ console.log(pointCoords)
       setCurrent(newCurrent);
     }
   };
-
 
   const handleCountry = (key) => {
     const splitRegions = () => {
@@ -199,33 +211,33 @@ console.log(pointCoords)
   };
 
   const handleDeleteImage = async (image) => {
-    const {_id} = school
-    console.log(image)
-    console.log(_id)
-    const {data} = await deleteImage(image, _id)
-    setSchool(data)
+    const { _id } = school;
+    console.log(image);
+    console.log(_id);
+    const { data } = await deleteImage(image, _id);
+    setSchool(data);
   };
 
   return (
     <>
       <Typography.Title level={3}>Edit School Information</Typography.Title>
-    
-        <Steps
-          current={current}
-          size="small"
-          progressDot
-          onChange={(e) => setCurrent(e)}
-          direction={
-            window.innerWidth > 767 && window.screen.width > 767
-              ? "horizontal"
-              : "vertical"
-          }
-        >
-          <Step progressDot title={status0} description="School Information" />
-          <Step progressDot title={status1} description="Contact Information" />
-          <Step progressDot title={status2} description="Image Upload" />
-          <Step progressDot title={status3} description="Submit" />
-        </Steps>
+
+      <Steps
+        current={current}
+        size="small"
+        progressDot
+        onChange={(e) => setCurrent(e)}
+        direction={
+          window.innerWidth > 767 && window.screen.width > 767
+            ? "horizontal"
+            : "vertical"
+        }
+      >
+        <Step progressDot title={status0} description="School Information" />
+        <Step progressDot title={status1} description="Contact Information" />
+        <Step progressDot title={status2} description="Image Upload" />
+        <Step progressDot title={status3} description="Submit" />
+      </Steps>
 
       <Row gutter={[16, 16]}>
         {current === 0 ? (
@@ -299,10 +311,7 @@ console.log(pointCoords)
                     label="Primary Educational Language:"
                     required
                   >
-                    <Select
-                      style={{ width: "100%" }}
-                      required
-                    >
+                    <Select style={{ width: "100%" }} required>
                       <Option value="Spanish">Spanish</Option>
                       <Option value="English">English</Option>
                       <Option value="Portuguese">Portuguese</Option>
@@ -451,9 +460,9 @@ console.log(pointCoords)
                       mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
                       mapStyle="mapbox://styles/robertomargain/cklx6uv1g01cb17lhikbi2c4g"
                       onViewportChange={(viewport) => {
-                        setViewport(viewport)
+                        setViewport(viewport);
                         setPointCoords([viewport.longitude, viewport.latitude]);
-                        }}
+                      }}
                     >
                       <NavigationControl style={{ left: 10, top: 10 }} />
                       <Marker
@@ -518,11 +527,11 @@ console.log(pointCoords)
             </Button>
           </>
         ) : current === 3 ? (
-          <div style={{display:'flex', flexDirection: 'column'}}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             <Typography.Title level={2}>
               Congratulations you successfully edited your School.
             </Typography.Title>
-            <Button type="primary"  size="small">
+            <Button type="primary" size="small">
               <Link to="/my-schools"> Click to go to My Schools</Link>
             </Button>
           </div>
