@@ -52,7 +52,7 @@ function UserApplications() {
               color={
                 text === "Under Review"
                   ? "geekblue"
-                  : text === "Aproved"
+                  : text === "Approved"
                   ? "green"
                   : text === "Cancelled"
                   ? "grey"
