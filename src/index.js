@@ -6,10 +6,13 @@ import "antd/dist/antd.less";
 import "./styles/style.less";
 import Router from "./Router";
 
+
 ReactDOM.render(
+  <React.StrictMode> 
     <AuthProvider>
       <Router />
-    </AuthProvider>,
+    </AuthProvider>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

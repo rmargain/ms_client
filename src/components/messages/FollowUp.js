@@ -15,13 +15,14 @@ import {createMessage} from "../../services/messages"
 
 
 function FollowUpMessage({ focusApplication, setIsModalVisible }) {
-
+const [seeinfo, setseeinfo] = useState(null)
 
   const [form] = Form.useForm();
 
   async function handleSubmit(info) {
     try {
-      await createMessage(info.message, focusApplication._id);
+      await createMessage(info, focusApplication._id);
+      setseeinfo(info)
       await message.success(
         "Message Sent!"
       );
@@ -30,6 +31,8 @@ function FollowUpMessage({ focusApplication, setIsModalVisible }) {
       message.error(error.response.data.message);
     }
   }
+
+  console.log(seeinfo)
 
   return (
     <Row gutter={[16, 16]}>

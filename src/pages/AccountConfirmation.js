@@ -3,27 +3,27 @@ import { useState, useEffect } from "react";
 import { activateUser } from "../services/auth";
 
 function AccountConfirmation({ match: { params }, history }) {
-  const [user, setUser] = useState(null);
+  const [usr, setUsr] = useState(null);
   useEffect(() => {
     async function getUser() {
       const { data } = await activateUser(params.confirmationCode)
-      setUser(data);
+      setUsr(data);
       if (data) {
         setTimeout(function () {
           history.push("/login");
         }, 5000);
       } else {
-          setUser('notfound')
+          setUsr('notfound')
       }
     }
  getUser()
     
   }, [params, history]);
-  console.log(user)
+ 
 
   return (
     <div>
-      {user? (
+      {usr? (
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={24} md={{ span: 24, offset: 8 }}>
             <Typography.Title className="confirm-text" level={1}>
@@ -34,7 +34,7 @@ function AccountConfirmation({ match: { params }, history }) {
             </Typography.Title>
           </Col>
         </Row>
-      ) : user === "not found" ? (
+      ) : usr === "not found" ? (
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={24} md={{ span: 24, offset: 8 }}>
             <Typography.Title className="confirm-text" level={1}>
