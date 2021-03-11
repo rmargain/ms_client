@@ -7,7 +7,7 @@ function LoggedOutRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) =>
-        !user ? <Component {...props} /> : <Redirect to="/profile" />
+        !user ? <Component {...props} /> : <Redirect to="/" />
       }
     />
   );

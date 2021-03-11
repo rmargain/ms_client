@@ -12,16 +12,10 @@ const _axios = axios.create({
   withCredentials: true,
 });
 
-export const createMessage = (message, applicationId) =>
-  _axios.post(`/create/${applicationId}`, message);
-// export const cancelApplication = (applicationId, message) =>
-//   _axios.patch(`/cancel/${applicationId}`, message);
-// export const approveApplication = (applicationId, body) =>
-//   _axios.patch(`/cancel/${applicationId}`, body);
-// export const getApplicationsbySchool = (schoolId) =>
-//   _axios.get(`/school/${schoolId}`);
-// export const getApplicationById = (applicationId) =>
-//   _axios.get(`/${applicationId}`);
+export const createMessage = (message, applicationId) => _axios.post(`/create/${applicationId}`, message);
+export const markAsRead = (messageId) => _axios.patch(`/read/${messageId}`);
+export const deleteMessage = (messageId) => _axios.patch(`/delete/${messageId}`);
+export const recoverMessage = (messageId) => _axios.patch(`/recover/${messageId}`);
+export const getMessagesBySchool = (schoolId) => _axios.get(`/school/${schoolId}`);
+export const getMessagesByUser = () => _axios.get('/applicant')
 
-// export const updateAvatar = (avatar) =>
-//   _axios.post("/avatar/change", { avatar });

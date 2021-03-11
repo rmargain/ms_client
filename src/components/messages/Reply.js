@@ -34,7 +34,7 @@ function FollowUpMessage({ focusApplication, setIsModalVisible }) {
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={24} md={{ span: 24, offset: 0 }}>
         <Typography.Title level={4}>
-          Application Follow-up Message
+          Reply Message
         </Typography.Title>
         <Form form={form} onFinish={handleSubmit} layout="vertical">
           <Form.Item

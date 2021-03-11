@@ -88,7 +88,6 @@ function StudentInfo({ focusStudent, setIsModal3Visible }) {
         )
         : <Button disabled>Follow Up</Button>
       ),
-      //TODO: agregar componente modal para enviar mensaje
     },
     {
       title: "Cancel Application",
@@ -99,8 +98,6 @@ function StudentInfo({ focusStudent, setIsModal3Visible }) {
         ) : (
           <Button disabled>Send Cancelation</Button>
         ),
-
-      //TODO: agregar componente modal para confirmar cancelación
     },
   ];
 

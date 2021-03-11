@@ -1,11 +1,11 @@
-import { Layout, Menu, Typography } from "antd";
+import { Layout, Menu, Typography, Badge } from "antd";
 import {
   UserOutlined,
   MailOutlined,
   TeamOutlined,
   FormOutlined,
   PlusSquareOutlined,
-  BankOutlined
+  BankOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useAuthInfo } from "../../hooks/authContext";
@@ -35,11 +35,27 @@ function LeftSlider({ folded, setFolded }) {
             <Menu.Item disabled={true} key="sub1">
               <Typography>{user.name}</Typography>
             </Menu.Item>
-            <SubMenu key="sub2" icon={<MailOutlined />} title="Messages">
-              <Menu.Item key="1">Inbox</Menu.Item>
-              <Menu.Item key="2">Unread</Menu.Item>
-              <Menu.Item key="3">Sent</Menu.Item>
-              <Menu.Item key="4">Trash</Menu.Item>
+            <SubMenu
+              key="sub2"
+              icon={
+                <Badge count={0} size="small" offset={[-10, 0]}>
+                  <MailOutlined />
+                </Badge>
+              }
+              title="Messages"
+            >
+              <Menu.Item key="1">
+                <Link to="/user-inbox">Inbox</Link>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <Link to="/user-unread">Unread</Link>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <Link to="/user-sent">Sent</Link>
+              </Menu.Item>
+              <Menu.Item key="4">
+                <Link to="/user-deleted">Deleted</Link>
+              </Menu.Item>
             </SubMenu>
             <Menu.Item key="sub3" icon={<TeamOutlined />} title="My Kids">
               <Link to="/my-kids">My Kids</Link>
@@ -50,9 +66,6 @@ function LeftSlider({ folded, setFolded }) {
               title="My Applications"
             >
               <Link to="/my-applications">My Applications</Link>
-            </Menu.Item>
-            <Menu.Item key="sub5" icon={<UserOutlined />} title="Profile">
-              <Link to="/profile">Profile</Link>
             </Menu.Item>
             {!user.isSchool ? (
               <Menu.Item
@@ -76,11 +89,31 @@ function LeftSlider({ folded, setFolded }) {
                 <Menu.Item key="sub7">
                   <Typography>My Schools</Typography>
                 </Menu.Item>
-                <SubMenu key="sub8" icon={<MailOutlined />} title="Messages">
-                  <Menu.Item key="5">Inbox</Menu.Item>
-                  <Menu.Item key="6">Unread</Menu.Item>
-                  <Menu.Item key="7">Sent</Menu.Item>
-                  <Menu.Item key="8">Trash</Menu.Item>
+                <SubMenu
+                  key="sub8"
+                  icon={
+                    <Badge
+                      count={5}
+                      size="small"
+                      offset={[-10, 0]}
+                    >
+                      <MailOutlined />
+                    </Badge>
+                  }
+                  title="Messages"
+                >
+                  <Menu.Item key="5">
+                    <Link to="/school-inbox">Inbox</Link>
+                  </Menu.Item>
+                  <Menu.Item key="6">
+                    <Link to="/school-unread">Unread</Link>
+                  </Menu.Item>
+                  <Menu.Item key="7">
+                    <Link to="/school-sent">Sent</Link>
+                  </Menu.Item>
+                  <Menu.Item key="8">
+                    <Link to="/school-deleted">Deleted</Link>
+                  </Menu.Item>
                 </SubMenu>
                 <Menu.Item
                   key="sub9"
@@ -89,14 +122,29 @@ function LeftSlider({ folded, setFolded }) {
                 >
                   <Link to="/my-schools">Schools</Link>
                 </Menu.Item>
+
                 <SubMenu
                   key="sub10"
                   icon={<FormOutlined />}
                   title="Applications"
                 >
-                  <Menu.Item key="9">Under Review</Menu.Item>
-                  <Menu.Item key="10">Accepted</Menu.Item>
-                  <Menu.Item key="11">Rejected</Menu.Item>
+                  <Menu.Item key="9">
+                    <Link to="/school-applications/all">All</Link>
+                  </Menu.Item>
+                  <Menu.Item key="10">
+                    <Link to="/school-applications/under-review">
+                      Under Review
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item key="11">
+                    <Link to="/school-applications/accepted">Accepted</Link>
+                  </Menu.Item>
+                  <Menu.Item key="12">
+                    <Link to="/school-applications/rejected">Rejected</Link>
+                  </Menu.Item>
+                  <Menu.Item key="13">
+                    <Link to="/school-applications/cancelled">Cancelled</Link>
+                  </Menu.Item>
                 </SubMenu>
               </>
             ) : null}

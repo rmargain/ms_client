@@ -22,6 +22,7 @@ function MySchools() {
   }, [isModal2Visible]);
 
   const showModal = (school) => {
+    setSelectedSchool(school)
     setIsModalVisible(true)
   }
 
@@ -63,7 +64,9 @@ function MySchools() {
           >
             <SchoolCard school={selectedSchool} />
             <Button shape="round" onClick={() => setIsModalVisible(false)}>
-              <Link to="/edit-school">Edit</Link>
+            {selectedSchool ? 
+              <Link to={`/edit-school/${selectedSchool._id}`}>Edit</Link>
+            : null}
             </Button>
           </Modal>
 

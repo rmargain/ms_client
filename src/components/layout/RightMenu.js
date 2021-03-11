@@ -23,9 +23,6 @@ function RightMenu() {
       ) : (
         <Header className="header">
           <Menu theme="dark" mode="horizontal">
-            <Link className="login-profile-logout" to="/profile">
-              Profile
-            </Link>
             <Button shape="round" className="signup-button">
             <Link className="login-profile-logout" onClick={() => logout()}>
               Logout

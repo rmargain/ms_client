@@ -2,18 +2,14 @@ import { useEffect, useState } from "react";
 import {
   Table,
   Tag,
-  Space,
   Button,
   Modal,
   Typography,
-  Row,
-  Col,
   List,
-  Divider,
 } from "antd";
 import { formattedDate } from "../utils/dateFormatter";
 import FollowUpMessage from "../components/messages/FollowUp";
-// import CancelApplication from "../application/CancelApplication";
+import CancelApplication from "../components/application/CancelApplication"
 import { getApplicationByUser } from "../services/application";
 import { useAuthInfo } from "../hooks/authContext";
 
@@ -70,7 +66,7 @@ function UserApplications() {
           render: (text) => `${formattedDate(text)}`,
         },
         {
-          title: "Message Applicant",
+          title: "Message School",
           key: "message",
           render: (record) =>
             !record.isCancelled ? (
@@ -78,30 +74,25 @@ function UserApplications() {
             ) : (
               <Button disabled>Message</Button>
             ),
-          //TODO: agregar componente modal para enviar mensaje
         },
         {
-          title: "Approval",
-          key: "approval",
+          title: "Cancellation",
+          key: "cancellation",
           render: (record) =>
             !record.isCancelled ? (
               <Button onClick={() => handleCancellation(record)}>
                 Cancel Application
               </Button>
             ) : (
-              <Button disabled>Send Cancelation</Button>
+              <Button disabled>Cancel Application</Button>
             ),
-
-          //TODO: agregar componente modal para confirmar cancelación
         },
       ];
 
       await setColumns(cols);
     }
     getApplications();
-  }, []);
-
-  console.log(applications);
+  }, [isModal2Visible]);
 
   const handleFollowUp = (record) => {
     setFocusApplication(record);
@@ -166,17 +157,17 @@ function UserApplications() {
       {focusApplication ? (
         <>
           <Modal visible={isModalVisible} onCancel={onCancel} footer={null}>
-            {/* <FollowUpMessage
+            <FollowUpMessage
               focusApplication={focusApplication}
               setIsModalVisible={setIsModalVisible}
-            ></FollowUpMessage> */}
+            ></FollowUpMessage>
           </Modal>
 
           <Modal visible={isModal2Visible} onCancel={onCancel2} footer={null}>
-            {/* <CancelApplication
+            <CancelApplication
               focusApplication={focusApplication}
               setIsModal2Visible={setIsModal2Visible}
-            ></CancelApplication> */}
+            ></CancelApplication>
           </Modal>
         </>
       ) : null}

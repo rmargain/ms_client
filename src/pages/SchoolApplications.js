@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Table, Tag, Button, Modal, Typography, List } from "antd";
-import { formattedDate } from "../../utils/dateFormatter";
-import FollowUpMessage from "../messages/FollowUp";
-import ApproveApplication from "./ApproveApplication";
-import { getApplicationsbySchoolUser } from "../../services/application";
-import { useAuthInfo } from "../../hooks/authContext";
+import { formattedDate } from "../utils/dateFormatter";
+import FollowUpMessage from "../components/messages/FollowUp";
+import ApproveApplication from "../components/application/ApproveApplication";
+import { getApplicationsbySchoolUser } from "../services/application";
+import { useAuthInfo } from "../hooks/authContext";
 
-function SchoolApplications({filter}) {
+function SchoolApplications() {
   const { user } = useAuthInfo();
   const [applications, setApplications] = useState(null);
   const [focusApplication, setFocusApplication] = useState(null);
@@ -16,12 +16,9 @@ function SchoolApplications({filter}) {
 
   useEffect(() => {
     async function getApplications() {
-      const {
-        data: { applications },
-      } = await getApplicationsbySchoolUser(user);
-      const finalData = filter === "all" ? applications : applications.filter((application) => application.admitted === filter )
-      setApplications(finalData);
-console.log(finalData)
+      const { data: {applications} } = await getApplicationsbySchoolUser(user);
+      setApplications(applications);
+
       const cols = [
         {
           title: "School",
@@ -95,6 +92,8 @@ console.log(finalData)
     }
     getApplications();
   }, [isModal2Visible]);
+
+  console.log(applications)
 
   const handleFollowUp = (record) => {
     setFocusApplication(record);

@@ -16,7 +16,7 @@ export const createApplication = (schoolId, application) => _axios.post(`/${scho
 export const cancelApplication = (applicationId, message) =>
   _axios.patch(`/cancel/${applicationId}`, message);
 export const approveApplication = (applicationId, body) =>
-  _axios.patch(`/cancel/${applicationId}`, body);
+  _axios.patch(`/approve/${applicationId}`, body);
 export const getApplicationsbySchool = (schoolId) => _axios.get(`/school/${schoolId}`);
 export const getApplicationsbySchoolUser = () => _axios.get(`/`);
 export const getApplicationById = (applicationId) => _axios.get(`/${applicationId}`);

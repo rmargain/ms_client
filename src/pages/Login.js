@@ -1,5 +1,6 @@
 import { Form, Typography, Col, Row, Button, Input } from "antd"
 import React from "react"
+import {Link} from 'react-router-dom'
 import { useAuthInfo } from "../hooks/authContext"
 
 function Login() {
@@ -24,6 +25,7 @@ function Login() {
           <Button type='primary' htmlType='submit' block size='large'>
             Login
           </Button>
+          <p>If you still don't have an account click <Link to='/signup'>here</Link> to sign up</p>
         </Form>
       </Col>
     </Row>
