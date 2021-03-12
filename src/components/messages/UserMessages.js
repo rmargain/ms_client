@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { Table, Tag, Button, Modal, Typography, List, message } from "antd";
 import { formattedDate } from "../../utils/dateFormatter";
 import Reply from "./Reply";
-import {deleteMessage, recoverMessage} from "../../services/messages";
-import { getMessagesByUser } from "../../services/messages";
+import {deleteMessage, recoverMessage, markAsRead, getMessagesByUser} from "../../services/messages";
 import { useAuthInfo } from "../../hooks/authContext";
 
 function UserMessages( {filter} ) {
@@ -39,7 +38,6 @@ function UserMessages( {filter} ) {
                 message.onFromModel === "School" && message.toDeleted === true
             );
       setMessages(finalData);
-      console.log(finalData)
 
       const cols = [
         {
@@ -65,9 +63,9 @@ function UserMessages( {filter} ) {
           ),
         },
         {
-          title: "Application Date",
+          title: "Message Date",
           dataIndex: "created_at",
-          key: "application-date",
+          key: "message-date",
           render: (text) => `${formattedDate(text)}`,
         },
         {
@@ -81,7 +79,7 @@ function UserMessages( {filter} ) {
           title: "Delete",
           key: "delete",
           render: (record) => (
-            <Button onClick={() => handleDelete(record)}>Delete</Button>
+            <Button onClick={() => handleDeleteModal(record)}>Delete</Button>
           ),
         },
       ];
@@ -89,12 +87,14 @@ function UserMessages( {filter} ) {
       await setColumns(cols);
     }
     getMessages();
-  }, [isModal2Visible]);
+  }, [isModal2Visible, focusMessage]);
 
   const handleReply = (record) => {
     setFocusApplication(record._application);
     setIsModalVisible(true);
   };
+
+  console.log(isModal2Visible)
 
   const onCancel = () => {
     setFocusApplication(null);
@@ -105,12 +105,23 @@ function UserMessages( {filter} ) {
     setIsModal2Visible(false);
   };
 
+const handleDeleteModal = (record) => {
+  setFocusMessage(record);
+  setIsModal2Visible(true);
+}
+
   const handleDelete = async (record) => {
     await setFocusMessage(record);
     await deleteMessage(record._id)
-    setIsModal2Visible(true);
+    setIsModal2Visible(false);
   };
  
+  const handleExpand = async (record) => {
+    await markAsRead(record._id)
+    await setFocusMessage(record)
+  }
+  
+
 
   return (
     <>
@@ -120,6 +131,7 @@ function UserMessages( {filter} ) {
           pagination={{ pageSize: 6 }}
           rowKey={(record) => record._id}
           dataSource={messages}
+          onExpand={(expanded, record) => handleExpand(record)}
           expandable={{
             expandedRowRender: (record) => (
               <Typography level={6}>{record.text}</Typography>
@@ -136,7 +148,7 @@ function UserMessages( {filter} ) {
             ></Reply>
           </Modal>
 
-          <Modal visible={isModal2Visible} onCancel={onCancel2} onOk2={handleDelete} >
+          <Modal visible={isModal2Visible} onCancel={onCancel2} onOk={handleDelete} >
             <Typography level={4}>
               Confirm Message Delete
             </Typography>

@@ -12,7 +12,7 @@ import {
 import {createMessage} from "../../services/messages"
 
 
-function FollowUpMessage({ focusApplication, setIsModalVisible }) {
+function Reply({ focusApplication, setIsModalVisible }) {
 
 
   const [form] = Form.useForm();
@@ -52,4 +52,4 @@ function FollowUpMessage({ focusApplication, setIsModalVisible }) {
   );
 }
 
-export default FollowUpMessage;
+export default Reply;
