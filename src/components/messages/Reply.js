@@ -14,12 +14,12 @@ import {createMessage} from "../../services/messages"
 
 function Reply({ focusApplication, setIsModalVisible }) {
 
-
+console.log(focusApplication)
   const [form] = Form.useForm();
 
   async function handleSubmit(info) {
     try {
-      await createMessage(info, focusApplication._id);
+      await createMessage(info, focusApplication);
       await message.success(
         "Message Sent!"
       );

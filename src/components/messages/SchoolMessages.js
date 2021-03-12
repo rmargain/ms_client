@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import { Table, Tag, Button, Modal, Typography, List, message } from "antd";
 import { formattedDate } from "../../utils/dateFormatter";
 import Reply from "./Reply";
-import {deleteMessage, recoverMessage, markAsRead, getMessagesByUser} from "../../services/messages";
-import { useAuthInfo } from "../../hooks/authContext";
+import {deleteMessage, recoverMessage, markAsRead, getMessagesBySchoolUser} from "../../services/messages";
 
-function UserMessages( {filter} ) {
-  const { user } = useAuthInfo();
+
+function SchoolMessages( {filter} ) {
   const [messages, setMessages] = useState(null);
   const [focusApplication, setFocusApplication] = useState(null);
   const [focusMessage, setFocusMessage] = useState(null);
@@ -16,26 +15,25 @@ function UserMessages( {filter} ) {
 
   useEffect(() => {
     async function getMessages() {
-      const { data } = await getMessagesByUser();
-
+      const { data } = await getMessagesBySchoolUser();
        const finalData =
         filter === "inbox"
           ? data.filter(
               (message) =>
-                message.onFromModel === "School" && message.toDeleted === false
+                message.onFromModel === "User" && message.toDeleted === false
             )
           : filter === "unread"
           ? data.filter(
               (message) =>
-                message.onFromModel === "School" &&
+                message.onFromModel === "User" &&
                 message.status === "Unread" &&
                 message.toDeleted === false
             )
           : filter === "sent"
-          ? data.filter((message) => message.onFromModel === "User")
+          ? data.filter((message) => message.onFromModel === "School")
           : data.filter(
               (message) =>
-                message.onFromModel === "School" && message.toDeleted === true
+                message.onFromModel === "User" && message.toDeleted === true
             );
       setMessages(finalData);
 
@@ -44,7 +42,7 @@ function UserMessages( {filter} ) {
           title: "From",
           dataIndex: "from",
           key: "from",
-          render: (from) => `${from.name} ${from.lastname}`,
+          render: ( from) => `${from.name} ${from.lastname}`,
         },
         {
           title: "Date",
@@ -73,14 +71,8 @@ function UserMessages( {filter} ) {
           title: "Delete/Recover",
           key: "delete/recover",
           render: (record) => (
-            <Button onClick={() => handleDeleteModal(record)}>
-              {(!focusMessage.toDeleted &&
-                focusMessage.onToModel === "User") ||
-              (!focusMessage.fromDeleted &&
-                focusMessage.onFromModel === "User")
-                ? "Delete"
-                : "Recover"}
-            </Button>
+            <Button onClick={() => handleDeleteModal(record)}>{(!record.toDeleted && record.onToModel === "School") ||
+      (!record.fromDeleted && record.onFromModel === "School") ? "Delete" : "Recover"}</Button>
           ),
         },
       ];
@@ -96,7 +88,7 @@ function UserMessages( {filter} ) {
     
   };
 
-  console.log(isModalVisible)
+  console.log(messages)
 
   const onCancel = () => {
     setFocusApplication(null);
@@ -114,8 +106,8 @@ const handleDeleteModal =  (record) => {
 
   const handleDelete = async () => {
     if (
-      (!focusMessage.toDeleted && focusMessage.onToModel === "User") ||
-      (!focusMessage.fromDeleted && focusMessage.onFromModel === "User")
+      (!focusMessage.toDeleted && focusMessage.onToModel === "School") ||
+      (!focusMessage.fromDeleted && focusMessage.onFromModel === "School")
     ) {
       await deleteMessage(focusMessage._id);
     } else {
@@ -123,20 +115,12 @@ const handleDeleteModal =  (record) => {
     }
     setIsModal2Visible(false);
   };
-
-  const handleRecover = async (record) => {
-    await setFocusMessage(record);
-    await recoverMessage(record._id);
-    setIsModal2Visible(false);
-  };
  
   const handleExpand = async (record) => {
     await markAsRead(record._id)
     await setFocusMessage(record)
   }
-  
-console.log(focusApplication)
-console.log(focusMessage)
+
 
   return (
     <>
@@ -176,4 +160,4 @@ console.log(focusMessage)
   );
 }
 
-export default UserMessages;
+export default SchoolMessages;

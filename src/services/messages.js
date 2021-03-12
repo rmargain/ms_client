@@ -17,5 +17,6 @@ export const markAsRead = (messageId) => _axios.patch(`/read/${messageId}`);
 export const deleteMessage = (messageId) => _axios.patch(`/delete/${messageId}`);
 export const recoverMessage = (messageId) => _axios.patch(`/recover/${messageId}`);
 export const getMessagesBySchool = (schoolId) => _axios.get(`/school/${schoolId}`);
-export const getMessagesByUser = () => _axios.get('/applicant')
+export const getMessagesByUser = () => _axios.get('/applicant');
+export const getMessagesBySchoolUser = () => _axios.get('/school-user');
 

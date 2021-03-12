@@ -35,15 +35,7 @@ function LeftSlider({ folded, setFolded }) {
             <Menu.Item disabled={true} key="sub1">
               <Typography>{user.name}</Typography>
             </Menu.Item>
-            <SubMenu
-              key="sub2"
-              icon={
-                <Badge count={0} size="small" offset={[-10, 0]}>
-                  <MailOutlined />
-                </Badge>
-              }
-              title="Messages"
-            >
+            <SubMenu key="sub2" icon={<MailOutlined />} title="Messages">
               <Menu.Item key="1">
                 <Link to="/user-inbox">Inbox</Link>
               </Menu.Item>
@@ -89,29 +81,17 @@ function LeftSlider({ folded, setFolded }) {
                 <Menu.Item key="sub7">
                   <Typography>My Schools</Typography>
                 </Menu.Item>
-                <SubMenu
-                  key="sub8"
-                  icon={
-                    <Badge
-                      count={5}
-                      size="small"
-                      offset={[-10, 0]}
-                    >
-                      <MailOutlined />
-                    </Badge>
-                  }
-                  title="Messages"
-                >
-                  <Menu.Item key="5">
+                <SubMenu key="sub8" icon={<MailOutlined />} title="Messages">
+                  <Menu.Item key="1">
                     <Link to="/school-inbox">Inbox</Link>
                   </Menu.Item>
-                  <Menu.Item key="6">
+                  <Menu.Item key="2">
                     <Link to="/school-unread">Unread</Link>
                   </Menu.Item>
-                  <Menu.Item key="7">
+                  <Menu.Item key="3">
                     <Link to="/school-sent">Sent</Link>
                   </Menu.Item>
-                  <Menu.Item key="8">
+                  <Menu.Item key="4">
                     <Link to="/school-deleted">Deleted</Link>
                   </Menu.Item>
                 </SubMenu>

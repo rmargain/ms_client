@@ -18,6 +18,13 @@ import SchoolApplicationsAccepted from "./pages/SchoolApplicationsAccepted"
 import SchoolApplicationsRejected from './pages/SchoolApplicationsRejected'
 import SchoolApplicationsCancelled from './pages/SchoolApplicationsCancelled'
 import UserInbox from "./pages/UserInbox";
+import UserUnread from "./pages/UserUnread"
+import UserSent from "./pages/UserSent"
+import UserDeleted from "./pages/UserDeleted"
+import SchoolInbox from "./pages/SchoolInbox";
+import SchoolUnread from "./pages/SchoolUnread";
+import SchoolSent from "./pages/SchoolSent";
+import SchoolDeleted from "./pages/SchoolDeleted";
 
 const Home = () => <h1>Home</h1>;
 const MyApplications = () => <h1>Signup</h1>;
@@ -57,24 +64,31 @@ function Router() {
           />
           <PrivateRoute
             component={SchoolApplicationsUnderReview}
-            path="/school-applications/under-review" 
+            path="/school-applications/under-review"
           />
           <PrivateRoute
             component={SchoolApplicationsAccepted}
-            path="/school-applications/accepted" 
+            path="/school-applications/accepted"
           />
           <PrivateRoute
             component={SchoolApplicationsRejected}
-            path="/school-applications/rejected" 
+            path="/school-applications/rejected"
           />
           <PrivateRoute
             component={SchoolApplicationsCancelled}
-            path="/school-applications/cancelled" 
+            path="/school-applications/cancelled"
           />
+          {/* User Messages */}
+          <PrivateRoute component={UserInbox} path="/user-inbox" />
 
-
-          <PrivateRoute component={UserInbox}
-          path='/user-inbox' />
+          <PrivateRoute component={UserUnread} path="/user-unread" />
+          <PrivateRoute component={UserSent} path="/user-sent" />
+          <PrivateRoute component={UserDeleted} path="/user-deleted" />
+          {/* School Messages */}
+          <PrivateRoute component={SchoolInbox} path="/school-inbox" />
+          <PrivateRoute component={SchoolUnread} path="/school-unread" />
+          <PrivateRoute component={SchoolSent} path="/school-sent" />
+          <PrivateRoute component={SchoolDeleted} path="/school-deleted" />
         </Switch>
       </LayoutApp>
     </BrowserRouter>
