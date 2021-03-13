@@ -72,15 +72,17 @@ function UserMessages( {filter} ) {
         {
           title: "Delete/Recover",
           key: "delete/recover",
-          render: (record) => (
+          render: (record) => (record ? (
             <Button onClick={() => handleDeleteModal(record)}>
-              {(!focusMessage.toDeleted &&
-                focusMessage.onToModel === "User") ||
-              (!focusMessage.fromDeleted &&
-                focusMessage.onFromModel === "User")
+              {(!record.toDeleted &&
+                record.onToModel === "User") ||
+              (!record.fromDeleted &&
+                record.onFromModel === "User")
                 ? "Delete"
                 : "Recover"}
             </Button>
+            ) :
+            null
           ),
         },
       ];
