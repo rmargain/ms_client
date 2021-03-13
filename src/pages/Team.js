@@ -34,7 +34,7 @@ function Team() {
             />
           </div>
           <Typography.Title>Roberto Margain</Typography.Title>
-          <Typography.Title level={3}>Co-fouder & CTO</Typography.Title>
+          <Typography.Title level={3}>Co-founder & CTO</Typography.Title>
           <Typography style={{ textAlign: "center" }}>
             After +7 years in management consulting, Roberto started his career
             in e-commerce working for companies like Amazon and Canasta Rosa. In
