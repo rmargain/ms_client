@@ -77,7 +77,7 @@ function LayoutApp({ children }) {
           </div>
         </Layout>
       </Layout>
-      <Footer style={{ textAlign: "center" }}>with 💙 by PT Ironhackers</Footer>
+      <Footer style={{ textAlign: "center" }}>SchoolMatch® Est. 2021</Footer>
     </Layout>
   );
 }

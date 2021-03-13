@@ -25,8 +25,10 @@ import SchoolInbox from "./pages/SchoolInbox";
 import SchoolUnread from "./pages/SchoolUnread";
 import SchoolSent from "./pages/SchoolSent";
 import SchoolDeleted from "./pages/SchoolDeleted";
+import Home from './pages/Home'
+import About from './pages/About'
 
-const Home = () => <h1>Home</h1>;
+
 const MyApplications = () => <h1>Signup</h1>;
 const UserMessages = () => <h1>Login</h1>;
 const Profile = () => <h1>Profile</h1>;
@@ -38,6 +40,9 @@ function Router() {
         <Switch>
           {/* Home */}
           <Route component={Home} path="/" exact />
+          {/* About */}
+          <Route component={About} path="/about" exact />
+
           {/* Auth */}
           <LoggedOutRoute component={Signup} path="/signup" />
           <LoggedOutRoute component={Login} path="/login" />
