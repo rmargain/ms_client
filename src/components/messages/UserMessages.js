@@ -3,10 +3,8 @@ import { Table, Tag, Button, Modal, Typography, List, message } from "antd";
 import { formattedDate } from "../../utils/dateFormatter";
 import Reply from "./Reply";
 import {deleteMessage, recoverMessage, markAsRead, getMessagesByUser} from "../../services/messages";
-import { useAuthInfo } from "../../hooks/authContext";
 
 function UserMessages( {filter} ) {
-  const { user } = useAuthInfo();
   const [messages, setMessages] = useState(null);
   const [focusApplication, setFocusApplication] = useState(null);
   const [focusMessage, setFocusMessage] = useState(null);
@@ -98,7 +96,6 @@ function UserMessages( {filter} ) {
     
   };
 
-  console.log(isModalVisible)
 
   const onCancel = () => {
     setFocusApplication(null);
@@ -137,8 +134,7 @@ const handleDeleteModal =  (record) => {
     await setFocusMessage(record)
   }
   
-console.log(focusApplication)
-console.log(focusMessage)
+
 
   return (
     <>

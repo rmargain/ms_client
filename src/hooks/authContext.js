@@ -18,7 +18,6 @@ export const AuthProvider = (props) => {
     } catch (error) {
       message.error(error.response.data.message);
     }
-    //TODO: Ver que devuelve res cuando exista un error y complementar el codigo
   }
 
   async function logout() {

@@ -7,7 +7,6 @@ function Student({setIsModalVisible, students, setStudents}) {
   const [form] = Form.useForm();
 
   async function handleSubmit(studentInfo) {
-      console.log(studentInfo)
     try {
       await createStudent(studentInfo);
       setIsModalVisible(false)

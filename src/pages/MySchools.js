@@ -1,4 +1,4 @@
-import { Form, Typography, Col, Row, Button, Input, Card, Modal, Skeleton, List } from "antd";
+import { Form, Typography, Col, Row, Button, Card, Modal, Skeleton, List } from "antd";
 import {InfoCircleOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import { useState, useEffect } from "react";
 import { getSchoolsByUser, deleteSchool } from "../services/school";

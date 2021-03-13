@@ -1,6 +1,5 @@
-import { Layout, Menu, Typography, Badge } from "antd";
+import { Layout, Menu, Typography } from "antd";
 import {
-  UserOutlined,
   MailOutlined,
   TeamOutlined,
   FormOutlined,

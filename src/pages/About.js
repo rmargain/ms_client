@@ -1,4 +1,4 @@
-import { Typography, Button } from "antd";
+import { Typography } from "antd";
 
 function About() {
   return (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Table, Tag, Button, Modal, Typography, List, message } from "antd";
+import { Table, Tag, Button, Modal, Typography} from "antd";
 import { formattedDate } from "../../utils/dateFormatter";
 import Reply from "./Reply";
 import {deleteMessage, recoverMessage, markAsRead, getMessagesBySchoolUser} from "../../services/messages";
@@ -88,7 +88,6 @@ function SchoolMessages( {filter} ) {
     
   };
 
-  console.log(messages)
 
   const onCancel = () => {
     setFocusApplication(null);

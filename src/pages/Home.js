@@ -1,4 +1,4 @@
-import { Carousel, Typography, Button } from "antd";
+import { Carousel, Typography } from "antd";
 
 function Home() {
   const contentStyle = {
@@ -6,8 +6,7 @@ function Home() {
     maxHeight: "calc(100vh - 64px - 70px - 48px)",
     objectFit: "cover",
     filter: "grayscale(90%)",
-    //   zIndex: '1',
-    //   position: 'absolute'
+
   };
   return (
     <div style={{ position: "relative" }}>
@@ -48,8 +47,6 @@ function Home() {
           zIndex: 2,
           position: "absolute",
           top: "0%",
-          // left: "50%",
-          // transform: "translate(-50%, -50%)",
           minWidth: "100%",
           height: "calc(100vh - 64px - 70px - 48px)",
           display: "flex",
@@ -94,7 +91,6 @@ function Home() {
             color: "#33393d",
             fontSize: "2vw",
             fontWeight: "bolder",
-            //   backgroundColor: "rgba(201, 201, 201, 0.7)",
             borderRadius: "25px",
             padding: "5px",
             textShadow: "2px 2px #2aabe4",

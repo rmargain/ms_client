@@ -10,7 +10,7 @@ import {
   Upload,
   Image,
 } from "antd";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useAuthInfo } from "../hooks/authContext";
 import MaskedInput from "antd-mask-input";
 import { CountryRegionData } from "react-country-region-selector";
@@ -37,7 +37,6 @@ const { Step } = Steps;
 const { Option } = Select;
 
 function BecomeSchool(e, { props }) {
-  console.log(props);
   const { schoolId } = e.match.params;
   const [form] = Form.useForm();
   const { user, setUser } = useAuthInfo();
@@ -157,7 +156,6 @@ function BecomeSchool(e, { props }) {
     }
   };
 
-  console.log(pointCoords);
 
   const handleNext = () => {
     if (current === 0) {
@@ -212,8 +210,6 @@ function BecomeSchool(e, { props }) {
 
   const handleDeleteImage = async (image) => {
     const { _id } = school;
-    console.log(image);
-    console.log(_id);
     const { data } = await deleteImage(image, _id);
     setSchool(data);
   };

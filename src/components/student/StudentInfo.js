@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Table, Tag, Space, Button, Modal, Typography } from "antd";
+import { Table, Tag, Button, Modal} from "antd";
 import { studentProfile } from "../../services/student";
 import { formattedDate } from "../../utils/dateFormatter";
 import FollowUpMessage from "../messages/FollowUp";

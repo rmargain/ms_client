@@ -29,7 +29,6 @@ const [students, setStudents] = useState(null)
   const [form] = Form.useForm();
 
   async function handleSubmit(applicationInfo) {
-    console.log(applicationInfo);
     try {
       await createApplication(selectedSchool._id, applicationInfo);
       setIsModal2Visible(false);

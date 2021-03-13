@@ -1,8 +1,5 @@
-import { Card, Carousel, Button, Image } from "antd";
-import { Link } from "react-router-dom";
+import { Card, Carousel} from "antd";
 
-
-const { Meta } = Card;
 
 function SchoolCard({ school }) {
   const contentStyle = {

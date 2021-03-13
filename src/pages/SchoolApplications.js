@@ -93,7 +93,6 @@ function SchoolApplications() {
     getApplications();
   }, [isModal2Visible]);
 
-  console.log(applications)
 
   const handleFollowUp = (record) => {
     setFocusApplication(record);

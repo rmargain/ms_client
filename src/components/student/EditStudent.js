@@ -1,4 +1,3 @@
-import {useState} from 'react'
 import {
   Form,
   Typography,
@@ -17,7 +16,6 @@ function StudentEdit({ focusStudent, setIsModal2Visible }) {
     const {alias, level, ...rest} = focusStudent
     const initialValues = {alias, level}
   const [form] = Form.useForm();
-//   const [initialValues, setInitialValues] = useState({alias, level})
 form.setFieldsValue(initialValues)
 
   async function handleSubmit({alias, level}) {

@@ -21,7 +21,6 @@ function SchoolApplications({filter}) {
       } = await getApplicationsbySchoolUser(user);
       const finalData = filter === "all" ? applications : applications.filter((application) => application.admitted === filter )
       setApplications(finalData);
-console.log(finalData)
       const cols = [
         {
           title: "School",

@@ -10,7 +10,7 @@ import {
   Upload,
   Image,
 } from "antd";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useAuthInfo } from "../hooks/authContext";
 import MaskedInput from "antd-mask-input";
 import { CountryRegionData } from "react-country-region-selector";
@@ -157,7 +157,7 @@ function BecomeSchool() {
   };
 
   const handleLanguage1 = (e) => {
-    console.log(e);
+    
   };
 
   const handleCountry = (key) => {
@@ -195,8 +195,6 @@ function BecomeSchool() {
 
   const handleDeleteImage = async (image) => {
     const {_id} = school
-    console.log(image)
-    console.log(_id)
     const {data} = await deleteImage(image, _id)
     setSchool(data)
   };

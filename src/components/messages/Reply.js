@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Form,
   Typography,
@@ -14,7 +13,6 @@ import {createMessage} from "../../services/messages"
 
 function Reply({ focusApplication, setIsModalVisible }) {
 
-console.log(focusApplication)
   const [form] = Form.useForm();
 
   async function handleSubmit(info) {
