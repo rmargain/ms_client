@@ -27,6 +27,7 @@ import SchoolSent from "./pages/SchoolSent";
 import SchoolDeleted from "./pages/SchoolDeleted";
 import Home from './pages/Home'
 import About from './pages/About'
+import Team from './pages/Team'
 
 
 const MyApplications = () => <h1>Signup</h1>;
@@ -42,6 +43,8 @@ function Router() {
           <Route component={Home} path="/" exact />
           {/* About */}
           <Route component={About} path="/about" exact />
+           {/* Team */}
+          <Route component={Team} path="/team" exact />
 
           {/* Auth */}
           <LoggedOutRoute component={Signup} path="/signup" />

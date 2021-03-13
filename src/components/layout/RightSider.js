@@ -30,17 +30,12 @@ function RightSider({collapsed, setCollapsed}) {
             Our Team
           </Link>
         </Menu.Item>
-        <Menu.Item key="5">
-          <Link to="/testimonials">
-            Testimonials
-          </Link>
-        </Menu.Item>
         </Menu>
         
             {!user ? (
         
           <Menu>
-          <Menu.Item key="6">
+          <Menu.Item key="5">
 
             <Link
               className="login-profile-logout"
@@ -57,10 +52,7 @@ function RightSider({collapsed, setCollapsed}) {
         
       ) : (
           <Menu >
-            <Menu.Item key="7">
-              <Link to="/profile">Profile</Link>
-            </Menu.Item>
-            <Menu.Item key="8">
+            <Menu.Item key="6">
               <Link onClick={() => logout()}>Logout</Link>
             </Menu.Item>
           </Menu>

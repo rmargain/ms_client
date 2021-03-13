@@ -27,11 +27,6 @@ function LeftMenu() {
             Our Team
           </Link>
         </Menu.Item>
-        <Menu.Item key="5">
-          <Link to="/testimonials">
-            Testimonials
-          </Link>
-        </Menu.Item>
       </Menu>
     </Header>
   );

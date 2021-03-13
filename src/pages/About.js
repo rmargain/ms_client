@@ -89,7 +89,7 @@ function About() {
         </div>
       </div>
       <div className="about-bottom">
-        <Typography.Title style={{color: 'white'}} className="about-bottom-title">
+        <Typography.Title style={{color: 'white', marginBottom:0}} className="about-bottom-title">
           What is a Micro-school?
         </Typography.Title>
         <div>
